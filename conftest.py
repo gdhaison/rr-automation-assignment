@@ -24,6 +24,11 @@ def page(browser):
     yield page
     page.close()
 
+@pytest.fixture
+def context():
+    """Fixture to share context between steps in a scenario."""
+    return {}
+
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):

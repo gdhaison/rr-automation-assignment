@@ -11,33 +11,41 @@ Feature: Pagination and Result Navigation
   @positive @smoke
   Scenario: Navigate to the next page of results
     Given the user notes the title of the first movie on the current page
+    And the user verifies the movie API for page 1
     When the user scroll to pagination bar
     And the user clicks the "Next" button
     Then the movie list should update with new content
 
-  @positive @smoke
+  @positive
   Scenario: Navigate to the Last page of results
     Given the user notes the title of the first movie on the current page
     When the user scroll to pagination bar
     And the user clicks the last page button
     Then the movie list should update with new content
 
-#   @positive
-#   Scenario: Navigate back to the previous page
-#     Given the user has navigated to the second page
-#     When the user clicks the "Previous" button
-#     Then the user should see the first page of results again
+  @positive
+  Scenario: Reload page and remain on the current pagination page
+    Given the user notes the title of the first movie on the current page
+    When the user scroll to pagination bar
+    And the user clicks the "Next" button
+    Then the movie list should update with new content
+    When user reload page
+    Then the movie list shouldn't update with new content
 
-#   @negative @known_issue
-#   Scenario: Verify pagination failure on the last few pages
-#     Given the user navigates to the second to last page of the results
-#     When the user clicks the "Next" button to reach the final page
-#     Then the system should handle the error gracefully or display a message
-#     # Note: Target for the "last few pages may not function properly" bug
+  @positive
+  Scenario: Navigate to the previous page of results
+    Given the user notes the title of the first movie on the current page
+    # And the user verifies the movie API for page 1
+    When the user scroll to pagination bar
+    And the user clicks the "Next" button
+    And the user clicks the "Previous" button
+    Then the movie list shouldn't update with new content
 
-#   @positive
-#   Scenario: Search reset pagination to page 1
-#     Given the user has navigated to the "2nd" page of results
-#     When the user searches for a specific movie title "Batman"
-#     Then the results should display movies matching "Batman"
-#     And the pagination state should reset to the first page
+  @positive
+  Scenario: Click button back to previous page
+    Given the user notes the title of the first movie on the current page
+    When the user scroll to pagination bar
+    And the user clicks the "Next" button
+    Then the movie list should update with new content
+    When the user clicks back button of the browser
+    Then the movie list shouldn't update with new content
