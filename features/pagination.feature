@@ -1,4 +1,4 @@
-@pagination
+@pagination @regression
 Feature: Pagination and Result Navigation
   As a user
   I want to navigate through multiple pages of movie results
